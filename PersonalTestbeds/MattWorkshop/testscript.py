@@ -19,12 +19,23 @@ sys.path.insert(1, 'PersonalTestbeds/MattWorkshop');
 # from LibraryDemo import LibraryDemo;
 # LibraryDemo.PlotTest();
 
-# Data Manipulation Test
-from DataManipulationTest import DataManipulationTest;
-file_path = "DataSets/Iris/Iris.csv";
-test_data = DataManipulationTest.Read(file_path,",");
+# # Data Manipulation Test
+# from DataManipulationTest import DataManipulationTest;
+# file_path = "DataSets/Iris/Iris.csv";
+# test_data = DataManipulationTest.Read(file_path,",");
 
-y_values = test_data.values[:,2];
-x_values = np.linspace(0,y_values.size,y_values.size);
+# # Line Plot
+# # x_values = test_data.values[:,0];
+# # y_values = test_data.values[:,1];
 
-DataManipulationTest.Plot(x_values,y_values);
+# # DataManipulationTest.Plot(x_values,y_values);
+
+# # Scatter Plot
+# x_values = test_data.values[:,1];
+# y_values = test_data.values[:,2];
+
+# DataManipulationTest.Scatter(x_values,y_values);
+
+# Iris Analysis
+from IrisAnalysis import IrisAnalysis;
+IrisAnalysis.Analyze();
