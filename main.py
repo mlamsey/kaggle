@@ -1,5 +1,5 @@
 # change the string to whatever file you want the run button to run
-exec(open("MattWorkshop/helloworld.py").read())
+exec(open("MattWorkshop/testscript.py").read())
 
 # import sys
 # sys.path.insert(1, 'MattWorkshop')
@@ -8,3 +8,4 @@ exec(open("MattWorkshop/helloworld.py").read())
 
 # if __name__ == "__main__":
 #     helloworld.run()
+
