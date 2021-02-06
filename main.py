@@ -1,5 +1,5 @@
 # change the string to whatever file you want the run button to run
-exec(open("MattWorkshop/testscript.py").read())
+exec(open("PersonalTestbeds/MattWorkshop/testscript.py").read())
 
 # import sys
 # sys.path.insert(1, 'MattWorkshop')
