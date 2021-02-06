@@ -1,4 +1,6 @@
-# Add Folder containing class to system path
+import numpy as np;
+
+# Add Folder containing classes to system path
 import sys;
 sys.path.insert(1, 'PersonalTestbeds/MattWorkshop');
 
@@ -20,4 +22,9 @@ sys.path.insert(1, 'PersonalTestbeds/MattWorkshop');
 # Data Manipulation Test
 from DataManipulationTest import DataManipulationTest;
 file_path = "DataSets/Iris/Iris.csv";
-DataManipulationTest.Read(file_path,",");
+test_data = DataManipulationTest.Read(file_path,",");
+
+y_values = test_data.values[:,2];
+x_values = np.linspace(0,y_values.size,y_values.size);
+
+DataManipulationTest.Plot(x_values,y_values);
