@@ -1,31 +1,34 @@
 use std::error::Error;
 use std::io;
 use std::process;
+use std::vec::Vec;
 
 use serde::Deserialize;
 
 #[derive(Debug, Deserialize)]
 struct DataRecord {
-    id: u32,
-    sepal_length: f32,
-    sepal_width: f32,
-    petal_length: f32,
-    petal_width: f32,
-    spieces: String,
+    Id: u32,
+    SepalLengthCm: f32,
+    SepalWidthCm: f32,
+    PetalLengthCm: f32,
+    PetalWidthCm: f32,
+    Species: String,
 }
 
-fn read_csv() -> Result<(), Box<dyn Error>> {
+fn parse_csv() -> Result<Vec<DataRecord>, Box<dyn Error>> {
     let mut reader = csv::Reader::from_reader(io::stdin());
+    let mut records = Vec::new();
     for result in reader.deserialize() {
         let record: DataRecord = result?;
         println!("{:?}", record);
+        records.push(record);
     }
     Ok(())
 }
 
 fn main() {
-    if let Err(e) = read_csv() {
-        println!("we did an oopsie {:?}", e);
+    let records = parse_csv().unwrap_or_else(|e| => {
+        println!("Oopsie! {:?}", e);
         process::exit(1);
-    }
+    }) 
 }
