@@ -1,5 +1,6 @@
 import pandas as pd;
 import numpy as np;
+import matplotlib.pyplot as plt;
 
 class IrisAnalysis:
     n_round = 3;
@@ -8,6 +9,7 @@ class IrisAnalysis:
     def Analyze():
         setosa, versicolor, virginica = IrisAnalysis.__LoadRawData();
         IrisAnalysis.__CalculateSepalLengthMeans(setosa, versicolor, virginica);
+        IrisAnalysis.__SepalLengthHistograms(setosa, versicolor, virginica);
 
     @staticmethod
     def __LoadRawData():
@@ -50,7 +52,21 @@ class IrisAnalysis:
         virginica_sepal_length_std = np.std(virginica_sepal_lengths)
         print("Virginica Mean Sepal Length: " + str(round(virginica_sepal_length_mean,IrisAnalysis.n_round)) + " | Virginica Stddev Sepal Length: " + str(round(virginica_sepal_length_std,IrisAnalysis.n_round)))
         
-        return setosa_sepal_length_mean, versicolor_sepal_length_mean, virginica_sepal_length_mean
+        return setosa_sepal_length_mean, versicolor_sepal_length_mean, virginica_sepal_length_mean;
+
+    @staticmethod
+    def __SepalLengthHistograms(setosa, versicolor, virginica):
+        setosa_sepal_lengths = [iris.sepal_length for iris in setosa];
+        versicolor_sepal_lengths = [iris.sepal_length for iris in versicolor];
+        virginica_sepal_lengths = [iris.sepal_length for iris in virginica];
+
+        plt.hist(setosa_sepal_lengths,10);
+        plt.hist(versicolor_sepal_lengths,10);
+        plt.hist(virginica_sepal_lengths,10);
+
+        plt.legend(["Setosa", "Versicolor", "Virginica"])
+
+        plt.show();
 
 # Private Classes
 class _IrisData:
