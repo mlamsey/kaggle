@@ -1,5 +1,6 @@
 import pandas as pd;
 import numpy as np;
+import seaborn as sns;
 import matplotlib.pyplot as plt;
 
 class IrisAnalysis:
@@ -7,12 +8,25 @@ class IrisAnalysis:
 
     @staticmethod
     def Analyze():
-        setosa, versicolor, virginica = IrisAnalysis.__LoadRawData();
-        IrisAnalysis.__CalculateSepalLengthMeans(setosa, versicolor, virginica);
-        IrisAnalysis.__SepalLengthHistograms(setosa, versicolor, virginica);
+        raw_data = IrisAnalysis.__LoadRawData();
+        print(raw_data['Species'].value_counts());
+        print("\nRaw Data Head:\n");
+        print(raw_data.head());
+
+        # drop Id column
+        raw_data = raw_data.drop('Id',axis = 1);
+        print("\nClean Data Head:\n");
+        print(raw_data.head());
+
+        sns.pairplot(raw_data, hue = 'Species', markers = '+');
+        plt.show();
+
+        # setosa, versicolor, virginica = IrisAnalysis.__LoadSeparatedData();
+        # IrisAnalysis.__CalculateSepalLengthMeans(setosa, versicolor, virginica);
+        # IrisAnalysis.__SepalLengthHistograms(setosa, versicolor, virginica);
 
     @staticmethod
-    def __LoadRawData():
+    def __LoadSeparatedData():
         raw_data = pd.read_csv("DataSets/Iris/Iris.csv");
 
         setosa_data = raw_data.loc[raw_data.Species == "Iris-setosa"];
@@ -25,6 +39,10 @@ class IrisAnalysis:
 
         # return setosa_data, versicolor_data, virginica_data;
         return setosa_objects, versicolor_objects, virginica_objects;
+
+    @staticmethod
+    def __LoadRawData():
+        return pd.read_csv("DataSets/Iris/Iris.csv");
 
     @staticmethod
     def __GenerateIrisDataSubset(dataframe):
