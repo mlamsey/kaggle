@@ -55,15 +55,12 @@ class IrisAnalysis:
     @staticmethod
     def __Learn(raw_data):
         print("Learning!");
+        IrisAnalysis.__KNeighborsLearn(raw_data);
+
+    @staticmethod
+    def __KNeighborsLearn(raw_data):
         y = raw_data['Species'];
         x = raw_data.drop(['Id', 'Species'], axis = 1);
-
-#        print(x.shape);
-#        print(y.shape);
-
-#        n_neighbors = 10;
-#        score = IrisAnalysis.__KNeighbors(x,y,n_neighbors);
-#        print("For " + str(n_neighbors) + " neighbors, the accuracy score is " + str(score));
 
         scores = [];
         test_range = np.linspace(0.01,0.75,num=75);
@@ -95,6 +92,10 @@ class IrisAnalysis:
         y_predicted = knn.predict(x_test);
         
         return metrics.accuracy_score(y_test,y_predicted);
+
+    @staticmethod
+    def __LogisticRegressionLearn(raw_data):
+        # boiiiii
 
     @staticmethod
     def __LogisticRegression(x,y):
