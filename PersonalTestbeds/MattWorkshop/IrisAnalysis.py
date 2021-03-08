@@ -19,14 +19,6 @@ class IrisAnalysis:
         print("\nRaw Data Head:\n");
         print(raw_data.head());
 
-        # drop Id column
-#        plottable_data = raw_data.drop('Id',axis = 1);
-#        print("\nClean Data Head:\n");
-#        print(plottable_data.head());
-
-#        sns.pairplot(plottable_data, hue = 'Species', markers = '+');
-#        plt.show();
-        
         IrisAnalysis.__Learn(raw_data);
         
         # setosa, versicolor, virginica = IrisAnalysis.__LoadSeparatedData();
@@ -96,6 +88,7 @@ class IrisAnalysis:
     @staticmethod
     def __LogisticRegressionLearn(raw_data):
         # boiiiii
+        1;
 
     @staticmethod
     def __LogisticRegression(x,y):
