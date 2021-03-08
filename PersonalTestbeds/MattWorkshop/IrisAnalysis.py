@@ -3,6 +3,12 @@ import numpy as np;
 import seaborn as sns;
 import matplotlib.pyplot as plt;
 
+# Scikit stuff
+from sklearn import metrics;
+from sklearn.neighbors import KNeighborsClassifier;
+from sklearn.linear_model import LogisticRegression;
+from sklearn.model_selection import train_test_split;
+
 class IrisAnalysis:
     n_round = 3;
 
@@ -14,13 +20,15 @@ class IrisAnalysis:
         print(raw_data.head());
 
         # drop Id column
-        raw_data = raw_data.drop('Id',axis = 1);
-        print("\nClean Data Head:\n");
-        print(raw_data.head());
+#        plottable_data = raw_data.drop('Id',axis = 1);
+#        print("\nClean Data Head:\n");
+#        print(plottable_data.head());
 
-        sns.pairplot(raw_data, hue = 'Species', markers = '+');
-        plt.show();
-
+#        sns.pairplot(plottable_data, hue = 'Species', markers = '+');
+#        plt.show();
+        
+        IrisAnalysis.__Learn(raw_data);
+        
         # setosa, versicolor, virginica = IrisAnalysis.__LoadSeparatedData();
         # IrisAnalysis.__CalculateSepalLengthMeans(setosa, versicolor, virginica);
         # IrisAnalysis.__SepalLengthHistograms(setosa, versicolor, virginica);
@@ -43,6 +51,60 @@ class IrisAnalysis:
     @staticmethod
     def __LoadRawData():
         return pd.read_csv("DataSets/Iris/Iris.csv");
+
+    @staticmethod
+    def __Learn(raw_data):
+        print("Learning!");
+        y = raw_data['Species'];
+        x = raw_data.drop(['Id', 'Species'], axis = 1);
+
+#        print(x.shape);
+#        print(y.shape);
+
+#        n_neighbors = 10;
+#        score = IrisAnalysis.__KNeighbors(x,y,n_neighbors);
+#        print("For " + str(n_neighbors) + " neighbors, the accuracy score is " + str(score));
+
+        scores = [];
+        test_range = np.linspace(0.01,0.75,num=75);
+        neighbors_range = np.linspace(1,25,num=25);
+        for t in test_range:
+            scores_row = []
+            for n in neighbors_range:
+                scores_row.append(IrisAnalysis.__KNeighbors(x,y,int(n),t));
+            scores.append(scores_row);
+        
+        scores = np.transpose(np.array(scores));
+        X,Y = np.meshgrid(test_range,neighbors_range);
+
+        fig, ax = plt.subplots(subplot_kw = {"projection":"3d"});
+
+        ax.plot_surface(X,Y,scores);
+        ax.set_xlabel('Test Range (Percent)');
+        ax.set_ylabel('Number of Neighbors');
+        ax.set_zlabel('Accuracy (Percent)');
+        ax.set_title('K-Nearest Neighbors: Iris Dataset');
+        plt.show();
+
+    @staticmethod
+    def __KNeighbors(x,y,n_neighbors,test_size):
+        x_train, x_test, y_train, y_test = train_test_split(x,y,test_size = test_size, random_state = None);
+
+        knn = KNeighborsClassifier(n_neighbors = n_neighbors);
+        knn.fit(x_train,y_train);
+        y_predicted = knn.predict(x_test);
+        
+        return metrics.accuracy_score(y_test,y_predicted);
+
+    @staticmethod
+    def __LogisticRegression(x,y):
+        # learn
+        1;
+
+    @staticmethod
+    def __ModelSelection(x,y):
+        # select model
+        1;
 
     @staticmethod
     def __GenerateIrisDataSubset(dataframe):
